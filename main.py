@@ -10,7 +10,7 @@ df = pd.read_csv(".\\Assets\\adult.csv")
 
 df.education.value_counts()
 print(df.education.value_counts())
-df.workclass.value_counts()
+df.workclass.value_counts()  
 print(df.workclass.value_counts())
 df.gender.value_counts()
 print(df.gender.value_counts())
