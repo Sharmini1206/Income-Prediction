@@ -12,16 +12,16 @@ from sklearn.model_selection import GridSearchCV
 
 
 df = pd.read_csv(".\\Assets\\adult.csv")
-# print (df)
+print (df)
 
 df.education.value_counts()
-#print(df.education.value_counts())
+print(df.education.value_counts())
 df.workclass.value_counts()
-#print(df.workclass.value_counts())
+print(df.workclass.value_counts())
 df.gender.value_counts()
-#print(df.gender.value_counts())
+print(df.gender.value_counts())
 df.occupation.value_counts()
-#print(df.occupation.value_counts())
+print(df.occupation.value_counts())
 
 df = pd.concat([df.drop("occupation", axis=1), pd.get_dummies(df.occupation).add_prefix("occupation_")],axis=1)
 df = pd.concat([df.drop("workclass", axis=1), pd.get_dummies(df.workclass).add_prefix("workclass_")],axis=1)
@@ -39,7 +39,7 @@ print(df)
 plt.figure(figsize=(18, 12))
 sns.heatmap(df.corr(), annot=False, cmap="coolwarm")
 
-#plt.show()
+plt.show()
 
 correlations = df.corr()["income"].abs()
 sorted_correlations = correlations.sort_values()
@@ -50,7 +50,7 @@ df_dropped = df.drop(cols_to_drop, axis =1)
 plt.figure(figsize=(15, 10))
 sns.heatmap(df_dropped.corr(), annot=True, cmap="coolwarm")
 
-#plt.show()
+plt.show()
 
 
 # here fnlwgt= Final weight
@@ -58,7 +58,6 @@ sns.heatmap(df_dropped.corr(), annot=True, cmap="coolwarm")
 # estimates of the civilian non-institutional population of the US.
 # (fnlwgt featured that How many people belong to that grp)
 # that's not much importance to this data. so we can drop that
-
 df = df.drop("fnlwgt", axis = 1)
 
 train_df, test_df = train_test_split(df, test_size=0.2)
@@ -88,19 +87,19 @@ importance = {k: v for k, v in sorted(importance.items(), key=lambda x:x[1], rev
 
 print(importance)
 
-#param_grid = {
-#    "n_estimators": [50, 100, 250],
-#    "max_depth": [5, 10, 30, None],
-#   "min_samples_split":[2, 4],
-#    "max_features": ["sqrt", "log2"]
-#}
-
 param_grid = {
-    "n_estimators": [250],
-    "max_depth": [5, None],
-    "min_samples_split":[2, 4],
+    "n_estimators": [50, 100, 250],
+    "max_depth": [5, 10, 30, None],
+   "min_samples_split":[2, 4],
     "max_features": ["sqrt", "log2"]
 }
+
+#param_grid = {
+#    "n_estimators": [250],
+#    "max_depth": [5, None],
+#    "min_samples_split":[2, 4],
+#   "max_features": ["sqrt", "log2"]
+#}
 
 grid_search = GridSearchCV(estimator= RandomForestClassifier(),
                            param_grid= param_grid, verbose=10)
